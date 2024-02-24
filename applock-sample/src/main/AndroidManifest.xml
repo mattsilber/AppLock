@@ -1,5 +1,4 @@
 <manifest
-    package="com.guardanis.applock.sample"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <supports-screens
@@ -21,7 +20,8 @@
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme">
+            android:theme="@style/Base.Theme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="jack.pocket.ACTION_OPEN"/>
@@ -36,7 +36,8 @@
             android:name=".ExampleLockedActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme" />
+            android:theme="@style/Base.Theme"
+            android:exported="false"/>
 
     </application>
 </manifest>
