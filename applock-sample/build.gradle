@@ -1,19 +1,13 @@
-buildscript {
-    ext.kotlin_version = '1.9.22'
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
 }
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
     namespace = "com.guardanis.applock.sample"
 
-    compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion = rootProject.ext.targetSdkVersion
+    buildToolsVersion = rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 14
@@ -29,9 +23,8 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:1.2.0"
-    implementation "com.guardanis:font-utils:1.0.4"
+    implementation libs.font.utils
+    implementation libs.androidx.appcompat
 
     implementation project(path: ':applock')
 }

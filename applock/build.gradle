@@ -1,10 +1,12 @@
-apply plugin: 'com.android.library'
+plugins {
+    alias(libs.plugins.androidLibrary)
+}
 
 android {
     namespace = "com.guardanis.applock"
 
-    compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion = rootProject.ext.targetSdkVersion
+    buildToolsVersion = rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 14
@@ -18,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation libs.androidx.appcompat
 }
 
 apply from: "./publishing.gradle"

@@ -1,1 +1,10 @@
-include ':applock', ':applock-sample'
+pluginManagement {
+    repositories {
+        mavenCentral()
+        maven { url "https://maven.google.com/" }
+        gradlePluginPortal()
+    }
+}
+
+include ':applock'
+include ':applock-sample'

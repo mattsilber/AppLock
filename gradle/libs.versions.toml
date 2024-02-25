@@ -1,0 +1,14 @@
+[versions]
+kotlin = "1.9.22"
+agp = "8.2.2"
+appcompat = "1.2.0"
+font-utils = "1.0.4"
+
+[libraries]
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+font-utils = { module = "com.guardanis:font-utils", version.ref = "font-utils" }
+
+[plugins]
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }

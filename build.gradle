@@ -1,21 +1,14 @@
+plugins {
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+}
+
 allprojects {
 
     ext {
         targetSdkVersion = 34
         buildToolsVersion = "34.0.0"
-    }
-
-    buildscript {
-
-        repositories {
-            maven { url "https://maven.google.com/" }
-            mavenCentral()
-            gradlePluginPortal()
-        }
-
-        dependencies {
-            classpath "com.android.tools.build:gradle:8.2.2"
-        }
     }
 
     repositories {
@@ -24,3 +17,4 @@ allprojects {
         gradlePluginPortal()
     }
 }
+
