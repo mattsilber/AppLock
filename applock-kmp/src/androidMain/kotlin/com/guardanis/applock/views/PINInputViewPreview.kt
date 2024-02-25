@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.guardanis.applock.settings.Config
 import com.guardanis.applock.settings.PINTheme
-import com.guardanis.applock.settings.Theme
 
 @Composable
 @Preview(widthDp = 320, heightDp = 50)
@@ -26,10 +25,8 @@ fun PINInputViewPreviewExposed(
 
     PINInputView(
         config = Config(
-            Theme(
-                pinTheme = PINTheme(
-                    passwordCharactersEnabled = false
-                )
+            pinTheme = PINTheme(
+                passwordCharactersEnabled = false
             )
         ),
         onInputEntered = { }

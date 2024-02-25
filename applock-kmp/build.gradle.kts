@@ -19,6 +19,9 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.material3)
             implementation(libs.compose.uitooling)
+
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
         }
     }
 }

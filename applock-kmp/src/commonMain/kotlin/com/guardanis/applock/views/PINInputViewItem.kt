@@ -27,7 +27,7 @@ fun PINInputViewItem(
         content = {
             Box(
                 modifier = Modifier
-                    .fillMaxSize(fraction = if (value == null) 0.1F else 1.0F)
+                    .fillMaxSize(fraction = if (value == null) theme.itemMinSizePercent else 1.0F)
                     .background(
                         color = theme.itemBackgroundColor,
                         shape = CircleShape
@@ -36,7 +36,7 @@ fun PINInputViewItem(
                 contentAlignment = Alignment.Center,
                 content = {
                     Text(
-                        text = if (theme.passwordCharactersEnabled) "*" else (value ?: ""),
+                        text = if (theme.passwordCharactersEnabled) theme.passwordCharacter else (value ?: ""),
                         color = theme.itemForegroundColor,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,

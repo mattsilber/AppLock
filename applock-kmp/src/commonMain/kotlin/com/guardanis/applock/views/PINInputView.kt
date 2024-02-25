@@ -32,7 +32,7 @@ fun PINInputView(
 
     val kindOfHalfSpacer = availableSize
         .width
-        .div(config.theme.pinTheme.pinItemCount)
+        .div(config.pinTheme.pinItemCount)
         .times(availableSize.width * 0.05)
         .div(2)
 
@@ -67,7 +67,7 @@ fun PINInputView(
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     0
-                        .until(config.theme.pinTheme.pinItemCount)
+                        .until(config.pinTheme.pinItemCount)
                         .map({
                             listOf(
                                 Spacer(
@@ -76,7 +76,7 @@ fun PINInputView(
                                 Column(
                                     content = {
                                         PINInputViewItem(
-                                            theme = config.theme.pinTheme,
+                                            theme = config.pinTheme,
                                             value = if (it < input.length) input[it].toString() else null
                                         )
                                     }

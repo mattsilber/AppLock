@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="applock__description_create_pin">Create a PIN to secure this application.</string>
+    <string name="applock__description_create_pin_reattempt">PINs didn\'t match. Try again.</string>
+    <string name="applock__description_confirm">Re-enter your PIN to confirm.</string>
+    <string name="applock__description_unlock_pin">Enter your PIN to unlock.</string>
+
+    <string name="applock__unlock_error_no_matching_pin_found">There is no saved PIN to unlock.</string>
+    <string name="applock__unlock_error_match_failed">The PINs don\'t match!</string>
+    <string name="applock__unlock_error_insufficient_selection">Wrong number of digits! Please try again</string>
+    <string name="applock__unlock_error_retry_limit_exceeded">You failed too many times. You may try again in %1$s.</string>
+
+</resources>
