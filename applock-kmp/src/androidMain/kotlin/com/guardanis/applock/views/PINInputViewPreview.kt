@@ -12,7 +12,10 @@ fun PINInputViewPreview(
     config: Config = Config()
 ) {
 
-    PINInputView(config = config)
+    PINInputView(
+        config = config,
+        onInputEntered = { }
+    )
 }
 
 @Composable
@@ -28,6 +31,7 @@ fun PINInputViewPreviewExposed(
                     passwordCharactersEnabled = false
                 )
             )
-        )
+        ),
+        onInputEntered = { }
     )
 }
