@@ -1,8 +1,8 @@
 package com.guardanis.applock
 
-import androidx.compose.runtime.Composable
 import com.guardanis.applock.services.BiometricLockService
 import com.guardanis.applock.services.PINLockService
+import com.guardanis.applock.services.enroll
 import com.guardanis.applock.services.isEnrolled
 import java.util.EnumSet
 
@@ -21,7 +21,6 @@ object AppLock {
      * @return a set of the eligible enrollment types for this device.
      * [Enrollment.PIN] is always an option
      */
-    @Composable
     fun deviceEligibleEnrollments(): EnumSet<Enrollment> {
         if (biometricLockService.isHardwareEligible() && biometricLockService.isDeviceBiometricLockingEnabled()) {
             return EnumSet.of(
@@ -38,7 +37,6 @@ object AppLock {
      * no authentication services have been enrolled. Only one service
      * may be enrolled at a time.
      */
-    @Composable
     fun enrollment(): Enrollment {
         if (pinLockService.isEnrolled()) {
             return Enrollment.PIN
@@ -51,7 +49,22 @@ object AppLock {
         return Enrollment.NONE
     }
 
-    @Composable
+    /**
+     * This should only be called after a successful PIN confirmation,
+     * enabling future PIN auth calls. Assuming no other service has been
+     * enrolled, future calls to [enrollment] should return [Enrollment.PIN].
+     */
+    fun enrollPinAuthentication(pin: String) {
+        pinLockService.enroll(
+            unencryptedPin = pin
+        )
+    }
+
+    /**
+     * This function assumes an immediately-preceding call to [enrollment] has returned
+     * [Enrollment.PIN]. [success] is triggered when the supplied [pin] matches the stored pin.
+     * [fail] will be triggered for varying [PINLockService.ErrorCode] instances.
+     */
     fun pinAuthenticate(
         pin: String,
         success: () -> Unit,
@@ -69,7 +82,12 @@ object AppLock {
         )
     }
 
-    @Composable
+    /**
+     * This function assumes an immediately-preceding call to [enrollment] has returned
+     * [Enrollment.BIOMETRICS]. [success] is triggered when the user authenticates with their
+     * device biometrics or lock screen. [fail] will be triggered for varying
+     * [BiometricLockService.ErrorCode] instances.
+     */
     fun biometricAuthenticate(
         success: () -> Unit,
         fail: (BiometricLockService.ErrorCode) -> Unit
@@ -83,5 +101,14 @@ object AppLock {
                 // TODO
             }
         )
+    }
+
+    /**
+     * This should only be called after a successful biometric authentication call,
+     * enabling future biometric auth calls. Assuming no other service has been
+     * enrolled, future calls to [enrollment] should return [Enrollment.BIOMETRICS].
+     */
+    fun enrollBiometricAuthentication() {
+        biometricLockService.enroll()
     }
 }

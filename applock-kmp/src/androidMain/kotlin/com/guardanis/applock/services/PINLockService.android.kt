@@ -1,42 +1,37 @@
 package com.guardanis.applock.services
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import com.guardanis.applock.AppLockAppContext
 import java.security.MessageDigest
 
 private const val pinPrefKey: String = "pin__saved_locked_password"
 
-@Composable
 actual fun PINLockService.isEnrolled(): Boolean {
     return getEnrolledPin()
         .isNotEmpty()
 }
 
-@Composable
-actual fun PINLockService.enroll(encryptedPin: String) {
-    appLockPreferences(LocalContext.current)
-        .edit()
-        .putString(pinPrefKey, encryptedPin)
-        .apply()
+actual fun PINLockService.enroll(unencryptedPin: String) {
+    AppLockAppContext
+        .preferences()
+        ?.edit()
+        ?.putString(pinPrefKey, encryptForStorage(pin = unencryptedPin))
+        ?.apply()
 }
 
-@Composable
 actual fun PINLockService.invalidateEnrollment() {
-    appLockPreferences(LocalContext.current)
-        .edit()
-        .remove(pinPrefKey)
-        .apply()
+    AppLockAppContext
+        .preferences()
+        ?.edit()
+        ?.remove(pinPrefKey)
+        ?.apply()
 }
 
-@Composable
 actual fun PINLockService.getEnrolledPin(): String {
-    return appLockPreferences(LocalContext.current)
-        .getString(pinPrefKey, null) ?: ""
+    return AppLockAppContext
+        .preferences()
+        ?.getString(pinPrefKey, null) ?: ""
 }
 
-@Composable
 actual fun PINLockService.encryptForStorage(pin: String): String {
     try {
         val md = MessageDigest.getInstance("SHA-1")

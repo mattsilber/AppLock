@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.guardanis.applock.AppLock
 import com.guardanis.applock.settings.Config
 
 
@@ -25,9 +26,9 @@ fun PINCreationView(
     onLockCreated: () -> Unit,
 ) {
 
-    val page = remember<PINCreationPage>({ PINCreationPage.CREATE })
-    val unconfirmedInput = remember<String>({ "" })
-    val errorText = remember<String>({ "" })
+    var page = remember<PINCreationPage>({ PINCreationPage.CREATE })
+    var unconfirmedInput = remember<String>({ "" })
+    var errorText = remember<String>({ "" })
 
     Column(
         modifier = Modifier
@@ -50,7 +51,35 @@ fun PINCreationView(
             PINInputView(
                 config = config,
                 onInputEntered = {
-                    // TODO: Verify valid, submit to service
+                    when (page) {
+                        PINCreationPage.CREATE -> {
+                            if (it.length != config.pinTheme.pinItemCount) {
+                                errorText = config.language.pinCreation.errorIncorrectLength
+
+                                return@PINInputView
+                            }
+
+                            unconfirmedInput = it
+                            page = PINCreationPage.CONFIRM
+                        }
+                        PINCreationPage.CONFIRM -> {
+                            if (it.length != config.pinTheme.pinItemCount) {
+                                errorText = config.language.pinCreation.errorIncorrectLength
+                                page = PINCreationPage.CREATE
+
+                                return@PINInputView
+                            }
+
+                            if (it != unconfirmedInput) {
+                                errorText = config.language.pinCreation.errorMismatch
+                                page = PINCreationPage.CREATE
+
+                                return@PINInputView
+                            }
+
+                            AppLock.enrollPinAuthentication(pin = it)
+                        }
+                    }
                 }
             )
         }

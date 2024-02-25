@@ -9,7 +9,6 @@ class PINLockService {
         MISMATCH
     }
 
-    @Composable
     fun authenticate(
         input: String,
         success: () -> Unit,
@@ -32,17 +31,12 @@ class PINLockService {
     }
 }
 
-@Composable
 expect fun PINLockService.isEnrolled(): Boolean
 
-@Composable
-expect fun PINLockService.enroll(encryptedPin: String)
+expect fun PINLockService.enroll(unencryptedPin: String)
 
-@Composable
 expect fun PINLockService.invalidateEnrollment()
 
-@Composable
 expect fun PINLockService.getEnrolledPin(): String
 
-@Composable
 expect fun PINLockService.encryptForStorage(pin: String): String

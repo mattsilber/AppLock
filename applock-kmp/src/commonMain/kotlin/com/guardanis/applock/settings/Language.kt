@@ -11,4 +11,6 @@ data class Language(
 data class PINCreationLanguage(
     val createDescription: String = "Create a PIN to secure this application.",
     val confirmDescription: String = "Create a PIN to secure this application.",
+    val errorIncorrectLength: String = "Wrong number of digits! Please try again",
+    val errorMismatch: String = "The PINs don't match!",
 )

@@ -16,20 +16,16 @@ class BiometricLockService(
 
     interface Authenticator {
 
-        @Composable
         fun authenticate(
             success: () -> Unit,
             fail: (ErrorCode) -> Unit
         )
 
-        @Composable
         fun isHardwareEligible(): Boolean
 
-        @Composable
         fun isDeviceBiometricLockingEnabled(): Boolean
     }
 
-    @Composable
     fun authenticate(
         success: () -> Unit,
         fail: (ErrorCode) -> Unit
@@ -59,12 +55,10 @@ class BiometricLockService(
         )
     }
 
-    @Composable
     fun isHardwareEligible(): Boolean {
         return authenticator.isHardwareEligible()
     }
 
-    @Composable
     fun isDeviceBiometricLockingEnabled(): Boolean {
         return authenticator.isDeviceBiometricLockingEnabled()
     }
@@ -72,11 +66,8 @@ class BiometricLockService(
 
 expect class BiometricAuthenticator(): BiometricLockService.Authenticator
 
-@Composable
 expect fun BiometricLockService.isEnrolled(): Boolean
 
-@Composable
 expect fun BiometricLockService.enroll()
 
-@Composable
 expect fun BiometricLockService.invalidateEnrollment()
