@@ -23,7 +23,12 @@ object AppLock {
      */
     @Composable
     fun deviceEligibleEnrollments(): EnumSet<Enrollment> {
-        // TODO: Check for Biometric service eligibility
+        if (biometricLockService.isHardwareEligible() && biometricLockService.isDeviceBiometricLockingEnabled()) {
+            return EnumSet.of(
+                Enrollment.PIN,
+                Enrollment.BIOMETRICS
+            )
+        }
 
         return EnumSet.of(Enrollment.PIN)
     }
@@ -39,7 +44,9 @@ object AppLock {
             return Enrollment.PIN
         }
 
-        // TODO: Check BiometricLockService that doesn't exist
+        if (biometricLockService.isEnrolled()) {
+            return Enrollment.BIOMETRICS
+        }
 
         return Enrollment.NONE
     }

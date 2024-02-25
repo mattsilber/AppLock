@@ -16,7 +16,7 @@ actual fun PINLockService.isEnrolled(): Boolean {
 
 @Composable
 actual fun PINLockService.enroll(encryptedPin: String) {
-    pinLockPreferences(LocalContext.current)
+    appLockPreferences(LocalContext.current)
         .edit()
         .putString(pinPrefKey, encryptedPin)
         .apply()
@@ -24,7 +24,7 @@ actual fun PINLockService.enroll(encryptedPin: String) {
 
 @Composable
 actual fun PINLockService.invalidateEnrollment() {
-    pinLockPreferences(LocalContext.current)
+    appLockPreferences(LocalContext.current)
         .edit()
         .remove(pinPrefKey)
         .apply()
@@ -32,7 +32,7 @@ actual fun PINLockService.invalidateEnrollment() {
 
 @Composable
 actual fun PINLockService.getEnrolledPin(): String {
-    return pinLockPreferences(LocalContext.current)
+    return appLockPreferences(LocalContext.current)
         .getString(pinPrefKey, null) ?: ""
 }
 
@@ -49,10 +49,6 @@ actual fun PINLockService.encryptForStorage(pin: String): String {
     }
 
     return ""
-}
-
-private fun pinLockPreferences(context: Context): SharedPreferences {
-    return context.getSharedPreferences("pin__preferences", Context.MODE_PRIVATE)
 }
 
 /**
