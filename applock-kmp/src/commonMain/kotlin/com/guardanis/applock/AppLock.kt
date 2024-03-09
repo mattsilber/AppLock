@@ -18,18 +18,15 @@ object AppLock {
     private val biometricLockService: BiometricLockService = BiometricLockService()
 
     /**
-     * @return a set of the eligible enrollment types for this device.
-     * [Enrollment.PIN] is always an option
+     * @return [Enrollment.BIOMETRICS] when biometric hardware is supported and the device is enrolled;
+     * otherwise [Enrollment.PIN].
      */
-    fun deviceEligibleEnrollments(): EnumSet<Enrollment> {
+    fun deviceEligibleEnrollment(): Enrollment {
         if (biometricLockService.isHardwareEligible() && biometricLockService.isDeviceBiometricLockingEnabled()) {
-            return EnumSet.of(
-                Enrollment.PIN,
-                Enrollment.BIOMETRICS
-            )
+            return Enrollment.BIOMETRICS
         }
 
-        return EnumSet.of(Enrollment.PIN)
+        return Enrollment.PIN
     }
 
     /**
@@ -104,11 +101,23 @@ object AppLock {
     }
 
     /**
-     * This should only be called after a successful biometric authentication call,
-     * enabling future biometric auth calls. Assuming no other service has been
-     * enrolled, future calls to [enrollment] should return [Enrollment.BIOMETRICS].
+     * This will attempt to authenticate with the device's biometric service and,
+     * upon authorization success, will locally enroll the user. Assuming no other
+     * service has been enrolled, future calls to [enrollment] should return [Enrollment.BIOMETRICS].
      */
-    fun enrollBiometricAuthentication() {
-        biometricLockService.enroll()
+    fun enrollBiometricAuthentication(
+        success: () -> Unit,
+        fail: (BiometricLockService.ErrorCode) -> Unit
+    ) {
+
+        biometricLockService.authenticate(
+            localEnrollmentCheckRequired = false,
+            success = {
+                biometricLockService.enroll()
+
+                success()
+            },
+            fail = fail
+        )
     }
 }

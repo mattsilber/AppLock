@@ -9,3 +9,4 @@ pluginManagement {
 include ':applock'
 include ':applock-sample'
 include ':applock-kmp'
+include ':applock-sample-compose'

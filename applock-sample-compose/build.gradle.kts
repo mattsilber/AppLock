@@ -1,6 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.compose)
 }
@@ -17,7 +17,8 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
-            implementation(libs.androidx.runner)
+            implementation(libs.androidx.appcompat)
+            implementation(libs.androidx.activityCompose)
         }
 
         commonMain.dependencies {
@@ -26,22 +27,28 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(libs.compose.uitooling)
+            implementation(libs.voyager.navigator)
 
-            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-            implementation(compose.components.resources)
+            implementation(project(":applock-kmp"))
         }
     }
 }
 
 android {
-    namespace = "com.guardanis.applock"
+    namespace = "com.guardannis.applock.sample.compose"
     compileSdk = 34
 
     defaultConfig {
+        applicationId = "com.guardannis.applock.sample.compose"
         minSdk = 21
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     sourceSets["main"].apply {
@@ -60,33 +67,26 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
 
 dependencies {
-    testImplementation(libs.junit)
-    testImplementation(libs.mockito)
-    testImplementation(libs.mockito.kotlin)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.androidx.test.core.ktx)
 
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 }

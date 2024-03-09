@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.guardanis.applock.AppLock
 import com.guardanis.applock.settings.Config
 
-
 enum class PINCreationPage {
     CREATE,
     CONFIRM
@@ -78,6 +77,8 @@ fun PINCreationView(
                             }
 
                             AppLock.enrollPinAuthentication(pin = it)
+
+                            onLockCreated()
                         }
                     }
                 }

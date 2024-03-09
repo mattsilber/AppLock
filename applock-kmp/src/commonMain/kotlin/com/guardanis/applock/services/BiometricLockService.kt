@@ -1,7 +1,5 @@
 package com.guardanis.applock.services
 
-import androidx.compose.runtime.Composable
-
 class BiometricLockService(
     val authenticator: Authenticator = BiometricAuthenticator()
 ) {
@@ -27,11 +25,12 @@ class BiometricLockService(
     }
 
     fun authenticate(
+        localEnrollmentCheckRequired: Boolean = true,
         success: () -> Unit,
         fail: (ErrorCode) -> Unit
     ) {
 
-        if (!isEnrolled()) {
+        if (localEnrollmentCheckRequired && !isEnrolled()) {
             fail(ErrorCode.NOT_ENROLLED)
 
             return
