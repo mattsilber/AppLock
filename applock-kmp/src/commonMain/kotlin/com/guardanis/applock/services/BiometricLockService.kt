@@ -19,8 +19,6 @@ class BiometricLockService(
             fail: (ErrorCode) -> Unit
         )
 
-        fun isHardwareEligible(): Boolean
-
         fun isDeviceBiometricLockingEnabled(): Boolean
     }
 
@@ -36,12 +34,6 @@ class BiometricLockService(
             return
         }
 
-        if (!isHardwareEligible()) {
-            fail(ErrorCode.DEVICE_NOT_ELIGIBLE)
-
-            return
-        }
-
         if (!isDeviceBiometricLockingEnabled()) {
             fail(ErrorCode.DEVICE_NOT_ENROLLED)
 
@@ -52,10 +44,6 @@ class BiometricLockService(
             success = success,
             fail = fail
         )
-    }
-
-    fun isHardwareEligible(): Boolean {
-        return authenticator.isHardwareEligible()
     }
 
     fun isDeviceBiometricLockingEnabled(): Boolean {

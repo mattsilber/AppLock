@@ -36,9 +36,6 @@ class BiometricLockServiceTests {
 
     @Before
     fun setupMockAuthenticator() {
-        MOCK_WHEN(authenticator.isHardwareEligible())
-            .thenReturn(false)
-
         MOCK_WHEN(authenticator.isDeviceBiometricLockingEnabled())
             .thenReturn(false)
     }
@@ -52,19 +49,7 @@ class BiometricLockServiceTests {
     }
 
     @Test
-    fun testAuthenticateWhenNotHardwareEligibleFailsWithDeviceNotEligible() {
-        service.enroll()
-        service.authenticate(true, success, fail)
-
-        verify(fail, times(1))
-            .invoke(eq(BiometricLockService.ErrorCode.DEVICE_NOT_ELIGIBLE))
-    }
-
-    @Test
     fun testAuthenticateWhenNotEnrolledInDeviceBiometricsFailsWithDeviceNotEnrolled() {
-        MOCK_WHEN(authenticator.isHardwareEligible())
-            .thenReturn(true)
-
         service.enroll()
         service.authenticate(true, success, fail)
 
@@ -74,9 +59,6 @@ class BiometricLockServiceTests {
 
     @Test
     fun testAuthenticateWhenEnrolledAndEligibleAttemptsToAuthenticate() {
-        MOCK_WHEN(authenticator.isHardwareEligible())
-            .thenReturn(true)
-
         MOCK_WHEN(authenticator.isDeviceBiometricLockingEnabled())
             .thenReturn(true)
 

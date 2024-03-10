@@ -22,7 +22,7 @@ object AppLock {
      * otherwise [Enrollment.PIN].
      */
     fun deviceEligibleEnrollment(): Enrollment {
-        if (biometricLockService.isHardwareEligible() && biometricLockService.isDeviceBiometricLockingEnabled()) {
+        if (biometricLockService.isDeviceBiometricLockingEnabled()) {
             return Enrollment.BIOMETRICS
         }
 
