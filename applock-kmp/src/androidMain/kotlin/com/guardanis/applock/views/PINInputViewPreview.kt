@@ -13,6 +13,7 @@ fun PINInputViewPreview(
 
     PINInputView(
         config = config,
+        inputSessionKey = "",
         onInputEntered = { }
     )
 }
@@ -29,6 +30,7 @@ fun PINInputViewPreviewExposed(
                 passwordCharactersEnabled = false
             )
         ),
+        inputSessionKey = "",
         onInputEntered = { }
     )
 }

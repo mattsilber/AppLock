@@ -7,8 +7,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.guardanis.applock.AppLock
@@ -27,9 +34,19 @@ class SampleHomeScreen(
             .fillMaxWidth()
             .padding(12.dp)
 
+        var statusInformation by remember({ mutableStateOf("") })
+
         Column(
             modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
             content = {
+                Text(
+                    text = statusInformation,
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(all = 24.dp)
+                )
+
                 Button(
                     modifier = buttonModifier,
                     onClick = {
@@ -38,15 +55,23 @@ class SampleHomeScreen(
                                 when (AppLock.deviceEligibleEnrollment()) {
                                     AppLock.Enrollment.BIOMETRICS -> {
                                         AppLock.enrollBiometricAuthentication(
-                                            success = { println("Biometrics Enrollment Success") },
-                                            fail = { println("Biometrics Enrollment Failed: $it") }
+                                            success = {
+                                                statusInformation = "Biometrics Enrollment Success"
+                                            },
+                                            fail = {
+                                                statusInformation = "Biometrics Enrollment Failed: $it"
+                                            }
                                         )
                                     }
                                     else -> {
                                         navigator.push(
-                                            PINCreationScreen(
+                                            PINEnrollmentScreen(
                                                 config,
-                                                { println("PIN Enrollment Success") }
+                                                {
+                                                    statusInformation = "PIN Enrollment Success"
+
+                                                    navigator.pop()
+                                                }
                                             )
                                         )
                                     }
@@ -54,15 +79,23 @@ class SampleHomeScreen(
                             }
                             AppLock.Enrollment.BIOMETRICS -> {
                                 AppLock.biometricAuthenticate(
-                                    success = { println("Biometrics Unlock Success") },
-                                    fail = { println("Biometrics Unlock Failed: $it") }
+                                    success = {
+                                        statusInformation = "Biometrics Unlock Success"
+                                    },
+                                    fail = {
+                                        statusInformation = "Biometrics Unlock Failed: $it"
+                                    }
                                 )
                             }
                             AppLock.Enrollment.PIN -> {
                                 navigator.push(
                                     PINUnlockScreen(
                                         config,
-                                        { println("PIN Unlock Success") }
+                                        {
+                                            statusInformation = "PIN Unlock Success"
+
+                                            navigator.pop()
+                                        }
                                     )
                                 )
                             }
@@ -70,6 +103,18 @@ class SampleHomeScreen(
                     },
                     content = {
                         Text("Check Device-Eligible Enrollment")
+                    }
+                )
+
+                Button(
+                    modifier = buttonModifier,
+                    onClick = {
+                        statusInformation = "Enrollments invalidated"
+
+                        AppLock.invalidateEnrollments()
+                    },
+                    content = {
+                        Text("Invalidate Enrollments")
                     }
                 )
             }

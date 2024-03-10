@@ -1,9 +1,13 @@
 package com.guardanis.applock.settings
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 data class PINTheme(
     val pinItemCount: Int = 4,
+    val pinViewHeight: Dp = 50.dp,
+    val pinItemSpacer: Dp = 8.dp,
     val passwordCharactersEnabled: Boolean = true,
     val passwordCharacter: String = "*",
     val itemMinSizePercent: Float = 0.05F,

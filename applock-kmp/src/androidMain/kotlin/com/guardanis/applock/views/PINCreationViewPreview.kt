@@ -10,7 +10,7 @@ fun PINCreationViewPreview(
     config: Config = Config()
 ) {
 
-    PINCreationView(
+    PINEnrollmentView(
         config = config,
         onLockCreated = { }
     )

@@ -3,8 +3,8 @@ package com.guardanis.applock
 import com.guardanis.applock.services.BiometricLockService
 import com.guardanis.applock.services.PINLockService
 import com.guardanis.applock.services.enroll
+import com.guardanis.applock.services.invalidateEnrollment
 import com.guardanis.applock.services.isEnrolled
-import java.util.EnumSet
 
 object AppLock {
 
@@ -71,10 +71,12 @@ object AppLock {
         pinLockService.authenticate(
             input = pin,
             success = {
-                // TODO
+                notifyUnlockSuccessful(Enrollment.PIN)
+                success()
             },
             fail = {
-                // TODO
+                notifyUnlockFailed(Enrollment.PIN)
+                fail(it)
             }
         )
     }
@@ -92,10 +94,12 @@ object AppLock {
 
         biometricLockService.authenticate(
             success = {
-                // TODO
+                notifyUnlockSuccessful(Enrollment.BIOMETRICS)
+                success()
             },
             fail = {
-                // TODO
+                notifyUnlockFailed(Enrollment.BIOMETRICS)
+                fail(it)
             }
         )
     }
@@ -119,5 +123,21 @@ object AppLock {
             },
             fail = fail
         )
+    }
+
+    private fun notifyUnlockSuccessful(enrollment: Enrollment) {
+        // TODO
+    }
+
+    private fun notifyUnlockFailed(enrollment: Enrollment) {
+        // TODO
+    }
+
+    /**
+     * Invalidate all enrollments so that [enrollment] returns [Enrollment.NONE]
+     */
+    fun invalidateEnrollments() {
+        pinLockService.invalidateEnrollment()
+        biometricLockService.invalidateEnrollment()
     }
 }

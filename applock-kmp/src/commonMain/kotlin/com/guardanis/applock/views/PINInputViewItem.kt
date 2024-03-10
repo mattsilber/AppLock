@@ -1,7 +1,6 @@
 package com.guardanis.applock.views
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -23,7 +22,7 @@ fun PINInputViewItem(
 ) {
 
     Box(
-        modifier = Modifier.aspectRatio(1.0F, matchHeightConstraintsFirst = true),
+        modifier = Modifier.aspectRatio(1.0F),
         contentAlignment = Alignment.Center,
         content = {
             Box(

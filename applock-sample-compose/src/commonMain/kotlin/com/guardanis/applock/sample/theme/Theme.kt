@@ -112,7 +112,7 @@ internal fun AppTheme(
         LocalThemeIsDark provides isDarkState
     ) {
         val isDark by isDarkState
-        SystemAppearance(!isDark)
+//        SystemAppearance(!isDark)
         MaterialTheme(
             colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
             typography = AppTypography,
@@ -124,5 +124,5 @@ internal fun AppTheme(
     }
 }
 
-@Composable
-internal expect fun SystemAppearance(isDark: Boolean)
+//@Composable
+//internal expect fun SystemAppearance(isDark: Boolean)
