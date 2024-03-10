@@ -12,7 +12,8 @@
             android:name="com.guardannis.applock.sample.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Applock">
+            android:theme="@style/Theme.Applock"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

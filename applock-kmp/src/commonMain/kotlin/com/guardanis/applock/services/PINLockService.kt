@@ -1,7 +1,5 @@
 package com.guardanis.applock.services
 
-import androidx.compose.runtime.Composable
-
 class PINLockService {
 
     enum class ErrorCode {

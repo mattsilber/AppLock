@@ -3,8 +3,9 @@ package com.guardanis.applock.views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,9 +31,13 @@ fun PINUnlockView(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .wrapContentHeight()
+            .fillMaxWidth()
             .background(config.pinTheme.uiBackgroundColor)
-            .padding(all = 12.dp),
+            .padding(
+                vertical = 28.dp,
+                horizontal = 12.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         content = {
@@ -40,7 +45,7 @@ fun PINUnlockView(
                 text = errorText.takeIf(String::isNotEmpty)
                     ?: config.language.pinUnlockLanguage.inputDescription,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 22.dp)
             )
 
             PINInputView(
