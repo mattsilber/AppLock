@@ -15,9 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
@@ -121,11 +119,7 @@ class SampleHomeScreen(
                         navigator.push(
                             PINEnrollmentScreen(
                                 config,
-                                {
-                                    statusInformation.value = "PIN Enrollment Success"
-
-                                    navigator.pop()
-                                }
+                                completionStatusUpdateMessage = statusInformation
                             )
                         )
                     }
@@ -145,11 +139,7 @@ class SampleHomeScreen(
                 navigator.push(
                     PINUnlockScreen(
                         config,
-                        {
-                            statusInformation.value = "PIN Unlock Success"
-
-                            navigator.pop()
-                        }
+                        completionStatusUpdateMessage = statusInformation
                     )
                 )
             }
@@ -168,11 +158,7 @@ class SampleHomeScreen(
                 navigator.push(
                     PINEnrollmentScreen(
                         config,
-                        {
-                            statusInformation.value = "PIN Enrollment Success"
-
-                            navigator.pop()
-                        }
+                        completionStatusUpdateMessage = statusInformation
                     )
                 )
             }
@@ -183,11 +169,7 @@ class SampleHomeScreen(
                 navigator.push(
                     PINUnlockScreen(
                         config,
-                        {
-                            statusInformation.value = "PIN Unlock Success"
-
-                            navigator.pop()
-                        }
+                        completionStatusUpdateMessage = statusInformation
                     )
                 )
             }

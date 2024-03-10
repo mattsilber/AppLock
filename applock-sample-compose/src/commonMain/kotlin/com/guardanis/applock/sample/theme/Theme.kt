@@ -100,28 +100,32 @@ private val AppTypography = Typography(
     )
 )
 
-internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
+internal val LocalThemeIsDark = compositionLocalOf(
+    defaultFactory = { mutableStateOf(true) }
+)
 
 @Composable
 internal fun AppTheme(
     content: @Composable() () -> Unit
 ) {
     val systemIsDark = isSystemInDarkTheme()
-    val isDarkState = remember { mutableStateOf(systemIsDark) }
+    val isDarkState = remember({ mutableStateOf(systemIsDark) })
+
     CompositionLocalProvider(
-        LocalThemeIsDark provides isDarkState
-    ) {
-        val isDark by isDarkState
-//        SystemAppearance(!isDark)
-        MaterialTheme(
-            colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
-            typography = AppTypography,
-            shapes = AppShapes,
-            content = {
-                Surface(content = content)
-            }
-        )
-    }
+        LocalThemeIsDark provides isDarkState,
+        content = {
+            val isDark by isDarkState
+//            SystemAppearance(!isDark)
+            MaterialTheme(
+                colorScheme = if (isDark) DarkColorScheme else LightColorScheme,
+                typography = AppTypography,
+                shapes = AppShapes,
+                content = {
+                    Surface(content = content)
+                }
+            )
+        }
+    )
 }
 
 //@Composable

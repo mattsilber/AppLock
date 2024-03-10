@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,8 +27,8 @@ fun PINUnlockView(
     onUnlocked: () -> Unit
 ) {
 
-    var errorText by remember({ mutableStateOf("") })
-    var inputSessionKey by remember({ mutableLongStateOf(0L) })
+    var errorText by rememberSaveable(init = { mutableStateOf("") })
+    var inputSessionKey by rememberSaveable(init = { mutableLongStateOf(0L) })
 
     Column(
         modifier = Modifier
