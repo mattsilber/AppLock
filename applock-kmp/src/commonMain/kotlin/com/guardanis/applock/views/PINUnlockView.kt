@@ -45,6 +45,7 @@ fun PINUnlockView(
             Text(
                 text = errorText.takeIf(String::isNotEmpty)
                     ?: config.language.unlock.inputDescription,
+                color = config.theme.uiForegroundColor,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 22.dp)
             )

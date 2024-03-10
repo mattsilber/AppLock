@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -30,7 +31,7 @@ class PINUnlockScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(config.theme.itemBackgroundColor)
+                .background(MaterialTheme.colorScheme.primary)
                 .padding(12.dp),
             contentAlignment = Alignment.Center,
             content = {

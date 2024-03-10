@@ -56,6 +56,7 @@ fun PINEnrollmentView(
                     PINEnrollmentPage.CONFIRM ->
                         config.language.enroll.confirmDescription
                 },
+                color = config.theme.uiForegroundColor,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 22.dp)
             )
