@@ -13,6 +13,7 @@ actual class BiometricAuthenticator: BiometricLockService.Authenticator {
     private var biometricPrompt: BiometricPrompt? = null
 
     override fun authenticate(
+        alreadyEnrolled: Boolean,
         success: () -> Unit,
         fail: (BiometricLockService.ErrorCode) -> Unit
     ) {
@@ -47,20 +48,28 @@ actual class BiometricAuthenticator: BiometricLockService.Authenticator {
             }
         }
 
-
         biometricPrompt = BiometricPrompt(
             activity,
             ContextCompat.getMainExecutor(activity),
             promptCallback
         )
 
-        // TODO: Get prompt info from language config
+        val language = AppLockAppContext.biometricsLanguage
+
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("")
-            .setSubtitle("")
-            .setDescription("")
+            .setTitle(
+                if (alreadyEnrolled) language.unlock.title else language.enroll.title
+            )
+            .setSubtitle(
+                if (alreadyEnrolled) language.unlock.subtitle else language.enroll.subtitle
+            )
+            .setDescription(
+                if (alreadyEnrolled) language.unlock.description else language.enroll.description
+            )
             .setConfirmationRequired(false)
-            .setNegativeButtonText("")
+            .setNegativeButtonText(
+                if (alreadyEnrolled) language.unlock.negativeAction else language.enroll.negativeAction
+            )
             .build()
 
         // TODO: Get crypto object

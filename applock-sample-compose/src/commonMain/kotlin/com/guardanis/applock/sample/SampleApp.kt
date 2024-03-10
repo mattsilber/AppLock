@@ -12,14 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
-import com.guardanis.applock.settings.Config
+import com.guardanis.applock.sample.theme.AppTheme
+import com.guardanis.applock.settings.PINConfig
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun SampleApp() {
+fun SampleApp() = AppTheme({
     Navigator(
         SampleHomeScreen(
-            config = Config()
+            config = PINConfig()
         ),
         content = {
             Scaffold(
@@ -45,4 +46,4 @@ fun SampleApp() {
             )
         }
     )
-}
+})

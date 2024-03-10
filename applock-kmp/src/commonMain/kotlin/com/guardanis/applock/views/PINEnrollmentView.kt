@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.guardanis.applock.AppLock
-import com.guardanis.applock.settings.Config
+import com.guardanis.applock.settings.PINConfig
 
 enum class PINEnrollmentPage {
     CREATE,
@@ -27,7 +27,7 @@ enum class PINEnrollmentPage {
 
 @Composable
 fun PINEnrollmentView(
-    config: Config,
+    config: PINConfig,
     onLockCreated: () -> Unit,
 ) {
 
@@ -40,7 +40,7 @@ fun PINEnrollmentView(
         modifier = Modifier
             .wrapContentHeight()
             .fillMaxWidth()
-            .background(config.pinTheme.uiBackgroundColor)
+            .background(config.theme.uiBackgroundColor)
             .padding(
                 vertical = 28.dp,
                 horizontal = 12.dp
@@ -51,9 +51,9 @@ fun PINEnrollmentView(
             Text(
                 text = when (page) {
                     PINEnrollmentPage.CREATE ->
-                        errorText.takeIf(String::isNotEmpty) ?: config.language.pinCreation.createDescription
+                        errorText.takeIf(String::isNotEmpty) ?: config.language.enroll.createDescription
                     PINEnrollmentPage.CONFIRM ->
-                        config.language.pinCreation.confirmDescription
+                        config.language.enroll.confirmDescription
                 },
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 22.dp)
@@ -68,8 +68,8 @@ fun PINEnrollmentView(
 
                     when (page) {
                         PINEnrollmentPage.CREATE -> {
-                            if (it.length != config.pinTheme.pinItemCount) {
-                                errorText = config.language.pinCreation.errorIncorrectLength
+                            if (it.length != config.theme.pinItemCount) {
+                                errorText = config.language.enroll.errorIncorrectLength
 
                                 return@PINInputView
                             }
@@ -78,15 +78,15 @@ fun PINEnrollmentView(
                             page = PINEnrollmentPage.CONFIRM
                         }
                         PINEnrollmentPage.CONFIRM -> {
-                            if (it.length != config.pinTheme.pinItemCount) {
-                                errorText = config.language.pinCreation.errorIncorrectLength
+                            if (it.length != config.theme.pinItemCount) {
+                                errorText = config.language.enroll.errorIncorrectLength
                                 page = PINEnrollmentPage.CREATE
 
                                 return@PINInputView
                             }
 
                             if (it != unconfirmedInput) {
-                                errorText = config.language.pinCreation.errorMismatch
+                                errorText = config.language.enroll.errorMismatch
                                 page = PINEnrollmentPage.CREATE
 
                                 return@PINInputView

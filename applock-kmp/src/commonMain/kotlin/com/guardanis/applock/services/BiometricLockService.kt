@@ -15,6 +15,7 @@ class BiometricLockService(
     interface Authenticator {
 
         fun authenticate(
+            alreadyEnrolled: Boolean,
             success: () -> Unit,
             fail: (ErrorCode) -> Unit
         )
@@ -28,7 +29,9 @@ class BiometricLockService(
         fail: (ErrorCode) -> Unit
     ) {
 
-        if (localEnrollmentCheckRequired && !isEnrolled()) {
+        val currentlyEnrolled = isEnrolled()
+
+        if (localEnrollmentCheckRequired && !currentlyEnrolled) {
             fail(ErrorCode.NOT_ENROLLED)
 
             return
@@ -41,6 +44,7 @@ class BiometricLockService(
         }
 
         authenticator.authenticate(
+            alreadyEnrolled = currentlyEnrolled,
             success = success,
             fail = fail
         )

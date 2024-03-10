@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -22,10 +23,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import com.guardanis.applock.AppLock
 import com.guardanis.applock.sample.theme.AppTheme
-import com.guardanis.applock.settings.Config
+import com.guardanis.applock.settings.PINConfig
 
 class SampleHomeScreen(
-    val config: Config
+    val config: PINConfig
 ): Screen {
 
     private val statusInformation = mutableStateOf("Click an action to get started")
@@ -45,9 +46,8 @@ class SampleHomeScreen(
             content = {
                 Text(
                     text = statusInformation.value,
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(all = 24.dp)
+                    modifier = Modifier.padding(all = 24.dp),
+                    style = MaterialTheme.typography.headlineMedium
                 )
 
                 Button(
@@ -84,10 +84,13 @@ class SampleHomeScreen(
                         AppLock.invalidateEnrollments()
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Red
+                        containerColor = MaterialTheme.colorScheme.errorContainer
                     ),
                     content = {
-                        Text("Invalidate Enrollments")
+                        Text(
+                            "Invalidate Enrollments",
+                            color = MaterialTheme.colorScheme.onErrorContainer
+                        )
                     }
                 )
             }

@@ -13,11 +13,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.guardanis.applock.sample.theme.AppTheme
-import com.guardanis.applock.settings.Config
+import com.guardanis.applock.settings.PINConfig
 import com.guardanis.applock.views.PINUnlockView
 
 class PINUnlockScreen(
-    val config: Config,
+    val config: PINConfig,
     val onUnlocked: () -> Unit
 ): Screen {
 
@@ -26,7 +26,7 @@ class PINUnlockScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(config.pinTheme.itemBackgroundColor)
+                .background(config.theme.itemBackgroundColor)
                 .padding(12.dp),
             contentAlignment = Alignment.Center,
             content = {

@@ -24,23 +24,23 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.guardanis.applock.settings.Config
+import com.guardanis.applock.settings.PINConfig
 
 @Composable
 fun PINInputView(
-    config: Config,
+    config: PINConfig,
     inputSessionKey: Any,
     onInputEntered: (String) -> Unit
 ) {
 
     var input by remember(inputSessionKey, { mutableStateOf("") })
-    val inputPattern = Regex("^[0-9]{0,${config.pinTheme.pinItemCount}}\$")
+    val inputPattern = Regex("^[0-9]{0,${config.theme.pinItemCount}}\$")
     val focusRequester = remember(::FocusRequester)
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(config.pinTheme.pinViewHeight),
+            .height(config.theme.pinViewHeight),
         contentAlignment = Alignment.Center,
         content = {
             TextField(
@@ -65,17 +65,17 @@ fun PINInputView(
 
             Row(
                 modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.spacedBy(config.pinTheme.pinItemSpacer),
+                horizontalArrangement = Arrangement.spacedBy(config.theme.pinItemSpacer),
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     Spacer(modifier = Modifier.weight(1F))
                     repeat(
-                        config.pinTheme.pinItemCount,
+                        config.theme.pinItemCount,
                         { index ->
                             Column(
                                 content = {
                                     PINInputViewItem(
-                                        theme = config.pinTheme,
+                                        theme = config.theme,
                                         value = if (index < input.length) input[index].toString() else null
                                     )
                                 }

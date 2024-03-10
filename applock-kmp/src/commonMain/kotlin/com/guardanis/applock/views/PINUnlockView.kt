@@ -18,11 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.guardanis.applock.AppLock
-import com.guardanis.applock.settings.Config
+import com.guardanis.applock.settings.PINConfig
 
 @Composable
 fun PINUnlockView(
-    config: Config,
+    config: PINConfig,
     onUnlocked: () -> Unit
 ) {
 
@@ -33,7 +33,7 @@ fun PINUnlockView(
         modifier = Modifier
             .wrapContentHeight()
             .fillMaxWidth()
-            .background(config.pinTheme.uiBackgroundColor)
+            .background(config.theme.uiBackgroundColor)
             .padding(
                 vertical = 28.dp,
                 horizontal = 12.dp
@@ -43,7 +43,7 @@ fun PINUnlockView(
         content = {
             Text(
                 text = errorText.takeIf(String::isNotEmpty)
-                    ?: config.language.pinUnlockLanguage.inputDescription,
+                    ?: config.language.unlock.inputDescription,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 22.dp)
             )
@@ -58,7 +58,7 @@ fun PINUnlockView(
                         pin = it,
                         success = onUnlocked,
                         fail = {
-                            errorText = config.language.pinUnlockLanguage.errorMismatch
+                            errorText = config.language.unlock.errorMismatch
                         }
                     )
                 }
