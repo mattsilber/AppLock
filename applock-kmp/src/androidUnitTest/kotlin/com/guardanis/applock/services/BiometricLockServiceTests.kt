@@ -45,7 +45,7 @@ class BiometricLockServiceTests {
 
     @Test
     fun testAuthenticateWhenNotEnrolledFailsWithNotEnrolled() {
-        service.authenticate(success, fail)
+        service.authenticate(true, success, fail)
 
         verify(fail, times(1))
             .invoke(eq(BiometricLockService.ErrorCode.NOT_ENROLLED))
@@ -54,7 +54,7 @@ class BiometricLockServiceTests {
     @Test
     fun testAuthenticateWhenNotHardwareEligibleFailsWithDeviceNotEligible() {
         service.enroll()
-        service.authenticate(success, fail)
+        service.authenticate(true, success, fail)
 
         verify(fail, times(1))
             .invoke(eq(BiometricLockService.ErrorCode.DEVICE_NOT_ELIGIBLE))
@@ -66,7 +66,7 @@ class BiometricLockServiceTests {
             .thenReturn(true)
 
         service.enroll()
-        service.authenticate(success, fail)
+        service.authenticate(true, success, fail)
 
         verify(fail, times(1))
             .invoke(eq(BiometricLockService.ErrorCode.DEVICE_NOT_ENROLLED))
@@ -81,7 +81,7 @@ class BiometricLockServiceTests {
             .thenReturn(true)
 
         service.enroll()
-        service.authenticate(success, fail)
+        service.authenticate(true, success, fail)
 
         verify(authenticator, times(1))
             .authenticate(eq(success), eq(fail))
