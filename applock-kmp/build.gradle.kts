@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -10,6 +12,23 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
+            }
+        }
+    }
+
+    val os = DefaultNativePlatform.getCurrentOperatingSystem()
+
+    if (os.isMacOsX) {
+        val iOSTargets = listOf(
+            iosX64(),
+            iosArm64(),
+            iosSimulatorArm64()
+        )
+
+        iOSTargets.forEach {
+            it.binaries.framework {
+                baseName = "AppLock"
+                isStatic = true
             }
         }
     }
